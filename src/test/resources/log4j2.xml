@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="warn" monitorInterval="30">
+
+    <Properties>
+        <Property name="ConsoleOut" value="%d{HH:mm:ss.SSS} %-5level [%t] [%c{1}::%M::%L] - %msg%n"/>
+    </Properties>
+
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="${ConsoleOut}"/>
+        </Console>
+    </Appenders>
+
+    <Loggers>
+        <!--Roots-->
+        <Root level="DEBUG">
+            <AppenderRef ref="Console"/>
+        </Root>
+    </Loggers>
+</Configuration>

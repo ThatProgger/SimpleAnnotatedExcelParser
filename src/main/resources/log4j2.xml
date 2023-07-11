@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="warn" monitorInterval="30">
+
+    <Properties>
+        <Property name="ConsoleOut" value="%d{HH:mm:ss.SSS} %-5level [%t] [%c{1}::%M::%L] - %msg%n"/>
+        <Property name="EntryOut" value="%msg%n"/>
+        <Property name="EntryLogDir">C:\logs\entry.log</Property>
+        <Property name="AllLogDir">C:\logs\logs.log</Property>
+        <Property name="InfoLogDir">C:\logs\info.log</Property>
+    </Properties>
+
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="${ConsoleOut}"/>
+            <Filters>
+                <MarkerFilter marker="Entry" onMatch="DENY" onMismatch="NEUTRAL"/>
+            </Filters>
+        </Console>
+
+<!--        Логируем все логи в файл-->
+        <File name="AllLogs" fileName="${AllLogDir}" append="false">
+            <PatternLayout pattern="${ConsoleOut}"/>
+        </File>
+н7
+        <!--        Логируем в файл запись разобронной строки-->
+        <File name="EntryLog" fileName="${EntryLogDir}" append="false">
+            <PatternLayout pattern="${EntryOut}"/>
+            <Filters>
+                <MarkerFilter marker="Entry" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+        </File>
+    </Appenders>
+
+    <Loggers>
+<!--       Логируем получаемые записи-->
+        <Logger name="excel.impl" level="DEBUG">
+            <AppenderRef ref="EntryLog"/>
+        </Logger>
+
+        <!--Roots-->
+        <Root  level="DEBUG">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="AllLogs"/>
+        </Root>
+    </Loggers>
+</Configuration>
